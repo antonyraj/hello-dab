@@ -1,0 +1,44 @@
+name: Databricks Bundle Deploy (DEV)
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+      DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+      DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+      DATABRICKS_AUTH_TYPE: azure-client-secret
+      DATABRICKS_CONFIG_PROFILE: ""
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@v0.225.0
+      
+      # Added the following as databrickscfg is expected to be in ~/.databricks
+      - name: Configure Databricks CLI auth
+        run: |
+          mkdir -p ~/.databricks
+          cat <<EOF > ~/.databrickscfg
+          [DEFAULT]
+          host = $DATABRICKS_HOST
+          auth_type = azure-client-secret
+          azure_client_id = $DATABRICKS_CLIENT_ID
+          azure_client_secret = $DATABRICKS_CLIENT_SECRET
+          azure_tenant_id = $DATABRICKS_TENANT_ID
+          EOF
+
+      - name: Validate bundle
+        run: databricks bundle validate --target dev
+
+      - name: Deploy bundle to DEV
+        run: databricks bundle deploy --target dev
