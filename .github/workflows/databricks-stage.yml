@@ -1,13 +1,15 @@
-name: Databricks Bundle Deploy (DEV)
+name: Databricks Bundle Deploy (Stage)
 
 on:
   push:
     branches:
-      - deveop
+      - main
 
 jobs:
-  deploy-dev:
+  deploy-stage:
     runs-on: ubuntu-latest
+    environment: 
+      name: stage
 
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
