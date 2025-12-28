@@ -23,6 +23,19 @@ jobs:
 
       - name: Setup Databricks CLI
         uses: databricks/setup-cli@v0.225.0
+      
+      # 🔑 THIS IS THE MISSING PIECE
+      - name: Configure Databricks CLI auth
+        run: |
+          mkdir -p ~/.databricks
+          cat <<EOF > ~/.databrickscfg
+          [DEFAULT]
+          host = $DATABRICKS_HOST
+          auth_type = azure-client-secret
+          azure_client_id = $DATABRICKS_CLIENT_ID
+          azure_client_secret = $DATABRICKS_CLIENT_SECRET
+          azure_tenant_id = $DATABRICKS_TENANT_ID
+          EOF
 
       - name: Validate bundle
         run: databricks bundle validate --target dev
