@@ -15,6 +15,7 @@ jobs:
       DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
       DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
       DATABRICKS_AUTH_TYPE: azure-client-secret
+      DATABRICKS_CONFIG_PROFILE: ""
 
     steps:
       - name: Checkout code
