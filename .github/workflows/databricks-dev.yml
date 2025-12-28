@@ -1,4 +1,4 @@
-name: Databricks Bundle Deploy (DEV), just a TEST CI/CD
+name: Databricks Bundle Deploy (DEV)
 
 on:
   push:
@@ -9,6 +9,12 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
 
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+      DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+      DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,19 +22,8 @@ jobs:
       - name: Setup Databricks CLI
         uses: databricks/setup-cli@v0.225.0
 
-      - name: Authenticate to Databricks (Service Principal)
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
-          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-          DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
-        run: |
-          databricks auth login --oauth
-
       - name: Validate bundle
-        run: |
-          databricks bundle validate --target dev
+        run: databricks bundle validate --target dev
 
       - name: Deploy bundle to DEV
-        run: |
-          databricks bundle deploy --target dev
+        run: databricks bundle deploy --target dev
