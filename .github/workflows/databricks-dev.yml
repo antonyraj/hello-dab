@@ -1,4 +1,4 @@
-name: Databricks Bundle Deploy (DEV)
+name: Databricks Bundle Deploy (DEV), just a TEST CI/CD
 
 on:
   push:
