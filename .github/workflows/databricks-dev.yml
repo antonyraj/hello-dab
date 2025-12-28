@@ -24,7 +24,7 @@ jobs:
       - name: Setup Databricks CLI
         uses: databricks/setup-cli@v0.225.0
       
-      # 🔑 THIS IS THE MISSING PIECE
+      # Added the following as databrickscfg is expected to be in ~/.databricks
       - name: Configure Databricks CLI auth
         run: |
           mkdir -p ~/.databricks
