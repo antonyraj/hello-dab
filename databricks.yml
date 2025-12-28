@@ -28,7 +28,7 @@ targets:
       profile: DEFAULT
     variables:
       catalog: learning_lab_catalog
-      schema: dev
+      schema: dasset_bundle_dev
     presets:
       artifacts_dynamic_version: true
   prod:
@@ -40,7 +40,7 @@ targets:
       root_path: /Workspace/Users/antony@diggibyte.com/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: learning_lab_catalog
-      schema: prod
+      schema: asset_bundle_stage
     permissions:
       - user_name: antony@diggibyte.com
         level: CAN_MANAGE
