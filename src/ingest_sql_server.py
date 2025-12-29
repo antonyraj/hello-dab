@@ -17,7 +17,7 @@ def get_last_watermark(spark, target_table):
 def read_incremental_from_sql_server(spark, jdbc_url, props, last_wm):
     """
     Reads only new or updated records from SQL Server
-    based on updated_at watermark.
+    based on updated_at watermark. Test
     """
     if last_wm:
         query = f"""
