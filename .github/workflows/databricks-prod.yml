@@ -6,10 +6,10 @@ on:
       - main
 
 jobs:
-  deploy-stage:
+  deploy-prod:
     runs-on: ubuntu-latest
     environment: 
-      name: stage
+      name: prod
 
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
