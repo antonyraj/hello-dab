@@ -23,7 +23,7 @@ def read_incremental_from_sql_server(spark, jdbc_url, props, last_wm):
         query = f"""
         (SELECT *
          FROM dbo.Customer
-         WHERE updated_at > '{last_wm}') AS src
+         WHERE updatedAt > '{last_wm}') AS src
         """
     else:
         # First run → full load
